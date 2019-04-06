@@ -552,6 +552,7 @@ open class PieRadarChartViewBase: ChartViewBase
             if !rotationWithTwoFingers, let touchLocation = touches.first?.location(in: self)
             {
                 processRotationGestureBegan(location: touchLocation)
+                delegate?.chartDidBeginRotate?(self)
             }
         }
         
@@ -586,6 +587,7 @@ open class PieRadarChartViewBase: ChartViewBase
         {
             let touchLocation = touch.location(in: self)
             processRotationGestureEnded(location: touchLocation)
+            delegate?.chartDidEndRotate?(self)
         }
         
         if _isRotating
@@ -599,6 +601,7 @@ open class PieRadarChartViewBase: ChartViewBase
         super.nsuiTouchesCancelled(touches, withEvent: event)
         
         processRotationGestureCancelled()
+        delegate?.chartDidEndRotate?(self)
     }
     #endif
     

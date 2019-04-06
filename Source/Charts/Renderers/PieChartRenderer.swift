@@ -523,15 +523,32 @@ open class PieChartRenderer: DataRenderer
 
                         if j < data.entryCount && pe?.label != nil
                         {
-                            ChartUtils.drawText(
+                            let style: NSMutableParagraphStyle = NSMutableParagraphStyle()
+                            style.lineBreakMode = NSLineBreakMode.byWordWrapping;
+                            style.alignment = NSTextAlignment.center
+                            
+                            ChartUtils.drawMultilineText(
                                 context: context,
                                 text: pe!.label!,
-                                point: CGPoint(x: x, y: y + lineHeight),
-                                align: .center,
+                                point: CGPoint(x: x, y: y),
                                 attributes: [
                                     NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
-                            )
+                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor,
+                                    NSAttributedString.Key.paragraphStyle: style],
+                                constrainedToSize: CGSize(width: radius*0.65, height: 0),
+                                anchor: CGPoint(x: 0.5, y: 0.5),
+                                angleRadians: 0)
+                            //                            ChartUtils.drawText(
+                            //                                context: context,
+                            //                                text: pe!.label!,
+                            ////                                point: CGPoint(x: x, y: y + lineHeight),
+                            //                                point: CGPoint(x: x, y: y),
+                            //                                align: .center,
+                            //                                attributes: [
+                            //                                    NSFontAttributeName: entryLabelFont ?? valueFont,
+                            //                                    NSForegroundColorAttributeName: entryLabelColor ?? valueTextColor,
+                            //                                    NSParagraphStyleAttributeName: style]
+                            //                            )
                         }
                     }
                     else if drawXInside
